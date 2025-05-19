@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Neopets Shop Stock: Price Reference
 // @namespace    https://github.com/fixicelo/userscripts
-// @version      1.0.0
+// @version      1.0.1
 // @description  Check and compare your Neopets shop stock prices with Jellyneo's, apply JN prices in bulk or per item.
 // @author       fixicelo
 // @match        *://www.neopets.com/market.phtml*
