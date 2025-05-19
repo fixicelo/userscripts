@@ -28,12 +28,15 @@
   }
 
   /**
-   * Returns all stock row elements (excluding header).
+   * Returns all stock row elements (excluding header and rows with only 1 td).
+   * Rows with only 1 td are "Enter your PIN:" and "Update [] Remove All"
    */
   function getStockRows() {
-    return document.querySelectorAll(
-      'form[action="process_market.phtml"] table tbody tr:not(:first-child)'
-    );
+    return Array.from(
+      document.querySelectorAll(
+        'form[action="process_market.phtml"] table tbody tr:not(:first-child)'
+      )
+    ).filter((row) => row.children.length > 1);
   }
 
   // ----------------------
@@ -236,10 +239,42 @@
 
   /**
    * Maps JN prices to the stock table, colors, and adds per-row apply button.
+   * If the returned array length matches the stock rows, and the names match, map by order.
+   * Otherwise, fallback to name-based matching.
    * @param {Array} jnResults
    */
   function mapJNPrices(jnResults) {
-    getStockRows().forEach((row) => {
+    const rows = Array.from(getStockRows());
+
+    const itemNames = rows.map(
+      (row) => row.querySelector("td:nth-child(1) b")?.innerText.trim() || ""
+    );
+    // If lengths match and all names match, map by order
+    if (
+      jnResults.length === rows.length &&
+      jnResults.every((r, i) => r.name === itemNames[i])
+    ) {
+      rows.forEach((row, i) => {
+        let priceCell = null;
+        let input = null;
+        row.querySelectorAll("td").forEach((td) => {
+          const inp = td.querySelector('input[type="text"]');
+          if (inp && inp.name && inp.name.startsWith("cost_")) {
+            priceCell = td;
+            input = inp;
+          }
+        });
+        if (!priceCell || !input) return;
+        // Remove previous JN price UI
+        priceCell
+          .querySelectorAll(".jn-ref-price, .jn-apply-row-btn")
+          .forEach((el) => el.remove());
+        addJNPriceUI(priceCell, input, jnResults[i], jnResults);
+      });
+      return;
+    }
+    // fallback: matching name and img url
+    rows.forEach((row, idx) => {
       const nameCell = row.querySelector("td:nth-child(1) b");
       if (!nameCell) return;
       let priceCell = null;
@@ -253,8 +288,10 @@
       });
       if (!priceCell || !input) return;
       const itemName = nameCell.innerText.trim();
-      const jnItem = jnResults.find((r) => r.name === itemName);
-      // Remove previous JN price UI
+      const imgUrl = row.querySelector("td:nth-child(2) img")?.src || "";
+      const jnItem = jnResults.find(
+        (r) => r.name === itemName && r.img === imgUrl
+      );
       priceCell
         .querySelectorAll(".jn-ref-price, .jn-apply-row-btn")
         .forEach((el) => el.remove());
