@@ -16,7 +16,7 @@ Welcome! This repository contains userscripts I created to enhance the Neopets e
 ### 1. Neopets Shop Stock: Price Reference
 Easily check, compare, and update your Neopets shop stock prices with Jellyneo prices directly from your shop stock page. You can apply Jellyneo prices per item or in bulk (with a custom offset).
 
-1. Install [Neopets Shop Stock: Jellyneo Price Reference on Greasy Fork](https://greasyfork.org/en/scripts/536374-neopets-shop-stock-price-reference)
+1. Install [Neopets Shop Stock: Price Reference](https://greasyfork.org/en/scripts/536374-neopets-shop-stock-price-reference)
 
 2. Go to [Your Shop](https://www.neopets.com/market.phtml?type=your)
 
