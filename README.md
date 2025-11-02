@@ -28,5 +28,10 @@ To use, install a userscript manager like [Tampermonkey](https://www.tampermonke
   Check and compare your Neopets shop stock prices with Jellyneo’s, and apply JN prices in bulk or per item.  
   [Install on Greasy Fork](https://greasyfork.org/en/scripts/536374-neopets-shop-stock-price-reference)
 
+
+- **[Neopets Bank: Display Daily Interest](./neopets/neopets-bank-display-daily-interest.user.js)**  
+  Calculates and displays the daily interest rate next to the annual interest in the Neopets bank.  
+  [Install on Greasy Fork](https://greasyfork.org/en/scripts/554503-neopets-bank-display-daily-interest)
+
 ---
 
